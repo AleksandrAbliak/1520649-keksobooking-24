@@ -98,3 +98,7 @@ const createOffer = () => {
     },
   };
 };
+
+console.log(
+  createOffer(),
+);
