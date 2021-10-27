@@ -25,7 +25,7 @@ const createPopup = (offer) => {
   popupPrice.textContent = `${offer.offer.price} ₽/ночь`;
 
   const popupType = popup.querySelector('.popup__type');
-  popupType.textContent = OFFER_TYPES[offer.type];
+  popupType.textContent = OFFER_TYPES[offer.offer.type];
 
   const popupCapacity = popup.querySelector('.popup__text--capacity');
   popupCapacity.textContent = `${ offer.offer.rooms  } комнаты для ${offer.offer.guests} гостей`;
@@ -34,12 +34,14 @@ const createPopup = (offer) => {
   popupTime.textContent = `Заезд после ${offer.offer.checkin}, выезд до ${offer.offer.checkout}`;
 
   const popupFeatures = popup.querySelector('.popup__features');
-  popupFeatures.textContent = offer.offer.features;
+  const popupFeaturesList = popupFeatures.querySelectorAll('.popup__feature');
+  popupFeaturesList.textContent = offer.offer.features;
 
   const popupDescription = popup.querySelector('.popup__description');
   popupDescription.textContent = offer.offer.description;
-  const popupPhoto = popup.querySelector('.popup__photos');
-  popupPhoto.src = offer.photo;
+
+  const popupPhoto = popup.querySelector('.popup__photo');
+  popupPhoto.src = offer.offer.photo;
 
   const popupAvatars = popup.querySelector('.popup__avatar');
   popupAvatars.src = offer.author.avatar;
