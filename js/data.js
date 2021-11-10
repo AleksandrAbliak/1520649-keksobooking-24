@@ -50,14 +50,6 @@ const PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/ke
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
 
-const GUESTS = [
-  '1',
-  '3'];
-
-const ROOMS = [
-  'big room',
-  'small room',
-  'medium room'];
 
 const DESCRIPTIONS = ['Лучший номер', 'Средний номер', 'Худший номер'];
 
@@ -67,16 +59,15 @@ const createLocation = () => ({
   lng: getRandomFloat(139.70000 , 139.80000 , 5),
 });
 
+
 const createOffer = () => {
   const randomAvatarIndex = getIntegerFromRange(0, AVATARS.length - 1);
   const randomTypeIndex = getIntegerFromRange(0, TYPES.length - 1);
   const randomCheckinIndex = getIntegerFromRange(0, CHECKINS.length - 1);
   const randomCheckoutIndex = getIntegerFromRange(0, CHECKOUTS.length - 1);
   const randomFeatureIndex = getIntegerFromRange(0, FEATURES.length - 1);
-  const randomGuestIndex = getIntegerFromRange(0, GUESTS.length - 1);
   const randomPhotoIndex = getIntegerFromRange(0, PHOTOS.length - 1);
   const randomTitleIndex = getIntegerFromRange(0, TITLES.length - 1);
-  const randomRoomIndex = getIntegerFromRange(0, ROOMS.length - 1);
   const randomDescriptionIndex = getIntegerFromRange(0, DESCRIPTIONS.length - 1);
   const location = createLocation();
   return {
@@ -88,12 +79,12 @@ const createOffer = () => {
       type:TYPES[randomTypeIndex],
       checkin:CHECKINS[randomCheckinIndex],
       checkout:CHECKOUTS[randomCheckoutIndex],
-      adress: `${location.lat}, ${location.lng}`,
-      feature:FEATURES[randomFeatureIndex],
-      guests: GUESTS[randomGuestIndex],
-      photo: PHOTOS[randomPhotoIndex],
+      address: `${location.lat}, ${location.lng}`,
+      features:[FEATURES[randomFeatureIndex]],
+      guests: getIntegerFromRange(1, 10),
+      photos: [PHOTOS[randomPhotoIndex]],
       title: TITLES[randomTitleIndex],
-      rooms: ROOMS[randomRoomIndex],
+      rooms: getIntegerFromRange(1, 10),
       description : DESCRIPTIONS[randomDescriptionIndex],
     },
     location: location,
