@@ -1,5 +1,4 @@
 import {getOffer} from './data.js';
-import {getIntegerFromRange} from './util.js';
 
 const OFFER_TYPES = {
   flat: 'Квартира',
@@ -11,14 +10,28 @@ const OFFER_TYPES = {
 const popupTemplate = document.querySelector('#card').
   content.
   querySelector('.popup');
-/*const renderFeatures = (features, popupFeatures) => {
+const renderFeatures = (features, popupFeatures) => {
   features.forEach((element) => {
     const feature = document.createElement('li');
 
     feature.classList.add('popup__feature', `popup__feature--${element}`);
     popupFeatures.append(feature);
   });
-};*/
+};
+
+const renderPhotos = (photos, popupPhotos, popupPhoto) => {
+  photos.forEach((element) => {
+    const photo = popupPhoto.cloneNode(true);
+    if (element) {
+      photo.src = element;
+      popupPhotos.append(photo);
+    } else {
+      photo.alt = '';
+      popupPhotos.classList.add('visually-hidden');
+    }
+  });
+};
+
 
 const similarOffer = getOffer();
 const createPopup = ({offer, author}) => {
@@ -46,51 +59,27 @@ const createPopup = ({offer, author}) => {
   const popupDescription = popup.querySelector('.popup__description');
   popupDescription.textContent = offer.description;
 
-  const popupPhotos = popup.querySelector('.popup__photos');
-  const popupPhoto = popupPhotos.querySelector('.popup__photo');
-
   const popupAvatars = popup.querySelector('.popup__avatar');
   popupAvatars.src = author.avatar;
 
-  //Удобства
   const popupFeatures = popup.querySelector('.popup__features');
-  const popupFeatureList = popupFeatures.querySelectorAll('.popup__feature');
 
-  if(Array.isArray(offer.features)) {
-    const modifiers = offer.features.map((featureValue) =>`popup__feature--${featureValue}`);
+  const popupPhotos = popup.querySelector('.popup__photos');
+  const popupPhoto = popup.querySelector('.popup__photo');
 
-    popupFeatureList.forEach((popupFeature) => {
-      const modifier = popupFeature.classList[1];
-      if (!modifiers.includes(modifier)) {
-        popupFeature.remove();
-      }
-    });
+  if (!offer.features) {
+    popupFeatures.remove();
   } else {
-    const modifiers = `popup__feature--${offer.features}`;
-    popupFeatureList.forEach((popupFeature) => {
-      const modifier = popupFeature.classList[1];
-      if (modifiers <= modifier) {
-        popupFeature.remove();
-      }
-    });}
+    popupFeatures.innerHTML = '';
+    renderFeatures(offer.features, popupFeatures);
+  }
 
-  //Фото
-  /*const popupPhotos = popup.querySelector('.popup__photos');
-  const popupPhoto = popupPhotos.querySelector('.popup__photo');
-
-  if(Array.isArray(offer.photos)) {
-    offer.photos.forEach((photoSrc, index) => {
-      if(index !== 0){
-        popupPhoto.src = offer.photos[0];
-      } else {
-        const popupPhotoItem = popupPhoto.cloneNode(true);
-        popupPhotoItem.src = photoSrc;
-        popupPhotos.appendChild(popupPhotoItem);
-      }
-    });
+  if (!offer.photos) {
+    popupFeatures.remove();
   } else {
-    popupPhoto.src = offer.photos;
-  }*/
+    popupPhotos.innerHTML = '';
+    renderPhotos(offer.photos, popupPhotos, popupPhoto);
+  }
 
 
   return popup;
@@ -100,5 +89,3 @@ const offerNode = createPopup(similarOffer[0]);
 
 const canvas = document.querySelector('#map-canvas');
 canvas.appendChild(offerNode);
-
-console.log(similarOffer);

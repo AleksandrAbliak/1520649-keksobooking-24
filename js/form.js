@@ -1,9 +1,3 @@
-const PRICE_MAX = 1000000;
-
-const titleLength = {
-  min: 30,
-  max: 100,
-};
 
 const typePrice = {
   bungalow: 0,
@@ -22,7 +16,7 @@ const capacityRules = {
 };
 
 const form = document.querySelector('.ad-form');
-const formTitle = form.querySelector('#title');
+//const formTitle = form.querySelector('#title');
 const formType = form.querySelector('#type');
 const formPrice = form.querySelector('#price');
 const formTimein = form.querySelector('#timein');
@@ -30,7 +24,7 @@ const formTimeout = form.querySelector('#timeout');
 const formRoomNumber = form.querySelector('#room_number');
 const formCapacity = form.querySelector('#capacity');
 
-const onTitleInput = () => {
+/*const onTitleInput = () => {
   const valueLength = formTitle.value.length;
   if (valueLength === 0) {
     formTitle.setCustomValidity(`Минимум ${titleLength.min} симв.`);
@@ -41,14 +35,14 @@ const onTitleInput = () => {
   } else {
     formTitle.setCustomValidity('');
   }
-};
+};*/
 
 const changeMinPrice = () => {
   formPrice.min = typePrice[formType.value];
   formPrice.placeholder = typePrice[formType.value];
 };
 
-const onPriceInput = (evt) => {
+/*const onPriceInput = (evt) => {
   const value = evt.target.value;
   const typeValue = typePrice[formType.value];
 
@@ -61,7 +55,7 @@ const onPriceInput = (evt) => {
   } else {
     formPrice.setCustomValidity('');
   }
-};
+};*/
 
 const onTimeChange = (evt) => {
   formTimein.value = evt.target.value;
@@ -85,15 +79,16 @@ const validateFields = () => {
   formTimeout.value = formTimein.value;
 };
 
-export const validateForm = () => {
+const validateForm = () => {
   validateFields();
-  formTitle.addEventListener('invalid', onTitleInput);
-  formTitle.addEventListener('input', onTitleInput);
+  //formTitle.addEventListener('invalid', onTitleInput);
+  //formTitle.addEventListener('input', onTitleInput);
   formType.addEventListener('change', () => changeMinPrice());
-  formPrice.addEventListener('invalid', onPriceInput);
-  formPrice.addEventListener('input', onPriceInput);
+  //formPrice.addEventListener('invalid', onPriceInput);
+  //formPrice.addEventListener('input', onPriceInput);
   formTimein.addEventListener('change', onTimeChange);
   formTimeout.addEventListener('change', onTimeChange);
   formRoomNumber.addEventListener('change', () => checkCountGuests());
   formCapacity.addEventListener('change', () => checkCountGuests());
 };
+validateForm ();

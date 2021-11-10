@@ -59,6 +59,7 @@ const createLocation = () => ({
   lng: getRandomFloat(139.70000 , 139.80000 , 5),
 });
 
+
 const createOffer = () => {
   const randomAvatarIndex = getIntegerFromRange(0, AVATARS.length - 1);
   const randomTypeIndex = getIntegerFromRange(0, TYPES.length - 1);
@@ -79,9 +80,9 @@ const createOffer = () => {
       checkin:CHECKINS[randomCheckinIndex],
       checkout:CHECKOUTS[randomCheckoutIndex],
       address: `${location.lat}, ${location.lng}`,
-      features:FEATURES[randomFeatureIndex],
+      features:[FEATURES[randomFeatureIndex]],
       guests: getIntegerFromRange(1, 10),
-      photos: PHOTOS[randomPhotoIndex],
+      photos: [PHOTOS[randomPhotoIndex]],
       title: TITLES[randomTitleIndex],
       rooms: getIntegerFromRange(1, 10),
       description : DESCRIPTIONS[randomDescriptionIndex],
