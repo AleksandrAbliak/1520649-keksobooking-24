@@ -1,14 +1,19 @@
-import { activeForm } from './filters.js';
+import { activateForm } from './filters.js';
 import {disableForm} from './filters.js';
 import {createPopup} from './popup.js';
 import {getOffer} from './data.js';
 disableForm();
 
+const LOCATION_LAT_DEFAULT = 35.68;
+const LOCATION_LNG_DEFAULT = 139.77;
+const ZOOM_MAP = 13;
+const resetButton = document.querySelector('#form-reset');
+
 const map = L.map('map-canvas')
   .on('load', () => {
-    activeForm();
+    activateForm();
   })
-  .setView([35.68, 139.77], 13);
+  .setView([LOCATION_LAT_DEFAULT, LOCATION_LNG_DEFAULT], ZOOM_MAP);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' , {
   attribution : 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -16,14 +21,14 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' , {
 ).addTo(map);
 
 const mainMarkerIcon = L.icon({
-  iconUrl: '../img/main-pin.svg',
+  iconUrl: 'img/main-pin.svg',
   iconSize: [52,52],
   iconAnchor: [26,52],
 });
 const marker = L.marker(
   {
-    lat :35.68,
-    lng :139.77,
+    lat :LOCATION_LAT_DEFAULT,
+    lng :LOCATION_LNG_DEFAULT,
   },
   {
     draggable : true,
@@ -40,12 +45,12 @@ marker.on('moveend', (evt) => {
 });
 
 const commonMarkerIcon = L.icon({
-  iconUrl: '../img/pin.svg',
+  iconUrl: 'img/pin.svg',
   iconSize:[40,40],
   iconAnchor:[20,40],
 });
-
-getOffer.forEach((offer) => {
+const offerList = getOffer();
+offerList.forEach((offer) => {
   const commonMarker = L.marker(
     {
       lat : offer.location.lat,
@@ -58,4 +63,17 @@ getOffer.forEach((offer) => {
   commonMarker.addTo(map);
   createPopup(offer);
   commonMarker.bindPopup(createPopup(offer));
+});
+
+
+resetButton.addEventListener('click', () => {
+  marker.setLatLng({
+    lat: LOCATION_LAT_DEFAULT,
+    lng: LOCATION_LNG_DEFAULT,
+  });
+
+  map.setView({
+    lat: LOCATION_LAT_DEFAULT,
+    lng: LOCATION_LNG_DEFAULT,
+  }, ZOOM_MAP);
 });

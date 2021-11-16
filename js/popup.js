@@ -1,4 +1,4 @@
-import {getOffer} from './data.js';
+//import {getOffer} from './data.js';
 
 const OFFER_TYPES = {
   flat: 'Квартира',
@@ -33,7 +33,7 @@ const renderPhotos = (photos, popupPhotos, popupPhoto) => {
 };
 
 
-const similarOffer = getOffer();
+//const similarOffer = getOffer();
 const createPopup = ({offer, author}) => {
 
 
@@ -85,9 +85,9 @@ const createPopup = ({offer, author}) => {
   return popup;
 };
 
-const offerNode = createPopup(similarOffer[0]);
+//const offerNode = createPopup(similarOffer[0]);
 
-const canvas = document.querySelector('#map-canvas');
-canvas.appendChild(offerNode);
+//const canvas = document.querySelector('#map-canvas');
+//canvas.appendChild(offerNode);
 
 export{createPopup};

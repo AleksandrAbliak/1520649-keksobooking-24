@@ -16,7 +16,7 @@ const disableForm = () => {
 };
 
 
-const activeForm = () => {
+const activateForm = () => {
   adForm.classList.remove('ad-form--disabled');
   const adFormElements=  adForm.querySelectorAll('.ad-form__element');
   (adFormElements).forEach((element) => {
@@ -30,4 +30,4 @@ const activeForm = () => {
   mapFilters.querySelector('.map__features').classList.remove('disabled');
 };
 
-export{disableForm, activeForm};
+export{disableForm, activateForm};
