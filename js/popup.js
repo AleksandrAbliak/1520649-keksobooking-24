@@ -85,9 +85,5 @@ const createPopup = ({offer, author}) => {
   return popup;
 };
 
-//const offerNode = createPopup(similarOffer[0]);
-
-//const canvas = document.querySelector('#map-canvas');
-//canvas.appendChild(offerNode);
 
 export{createPopup};

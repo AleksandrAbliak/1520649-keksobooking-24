@@ -38,8 +38,8 @@ const marker = L.marker(
 marker.addTo(map);
 
 const addressForm = document.querySelector('#address');
-addressForm.value = `${marker._latlng.lat} ${marker._latlng.lng}`;
-marker.on('moveend', (evt) => {
+addressForm.value = `${marker._latlng.lat}, ${marker._latlng.lng}`;
+marker.on('drag', (evt) => {
   const markerAdress = evt.target.getLatLng();
   addressForm.value = `${markerAdress.lat.toFixed(5)} ${markerAdress.lng.toFixed(5)}`;
 });
