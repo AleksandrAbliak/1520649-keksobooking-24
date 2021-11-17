@@ -1,13 +1,13 @@
 import { activateForm } from './filters.js';
-import {disableForm} from './filters.js';
-import {createPopup} from './popup.js';
-import {getOffer} from './data.js';
+import { disableForm } from './filters.js';
+import { createPopup } from './popup.js';
+//import { getOffer } from './data.js';
 disableForm();
 
 const LOCATION_LAT_DEFAULT = 35.68;
 const LOCATION_LNG_DEFAULT = 139.77;
 const ZOOM_MAP = 13;
-const resetButton = document.querySelector('#form-reset');
+
 
 const map = L.map('map-canvas')
   .on('load', () => {
@@ -27,8 +27,8 @@ const mainMarkerIcon = L.icon({
 });
 const marker = L.marker(
   {
-    lat :LOCATION_LAT_DEFAULT,
-    lng :LOCATION_LNG_DEFAULT,
+    lat: LOCATION_LAT_DEFAULT,
+    lng: LOCATION_LNG_DEFAULT,
   },
   {
     draggable : true,
@@ -38,42 +38,42 @@ const marker = L.marker(
 marker.addTo(map);
 
 const addressForm = document.querySelector('#address');
-addressForm.value = `${marker._latlng.lat} ${marker._latlng.lng}`;
-marker.on('moveend', (evt) => {
+addressForm.value = `${marker._latlng.lat}, ${marker._latlng.lng}`;
+marker.on('drag', (evt) => {
   const markerAdress = evt.target.getLatLng();
   addressForm.value = `${markerAdress.lat.toFixed(5)} ${markerAdress.lng.toFixed(5)}`;
 });
+
+const returnMainMarker = () => {
+  marker.setLatLng({
+    lat: LOCATION_LAT_DEFAULT,
+    lng: LOCATION_LNG_DEFAULT,
+  });
+  addressForm.value = `${marker._latlng.lat} ${marker._latlng.lng}`;
+};
+
 
 const commonMarkerIcon = L.icon({
   iconUrl: 'img/pin.svg',
   iconSize:[40,40],
   iconAnchor:[20,40],
 });
-const offerList = getOffer();
-offerList.forEach((offer) => {
-  const commonMarker = L.marker(
-    {
-      lat : offer.location.lat,
-      lng : offer.location.lng,
-    },
-    {
-      icon: commonMarkerIcon,
-    },
-  );
-  commonMarker.addTo(map);
-  createPopup(offer);
-  commonMarker.bindPopup(createPopup(offer));
-});
 
-
-resetButton.addEventListener('click', () => {
-  marker.setLatLng({
-    lat: LOCATION_LAT_DEFAULT,
-    lng: LOCATION_LNG_DEFAULT,
+const makeCommonMarkers = (offers) => {
+  offers.forEach((offer) => {
+    const commonMarker = L.marker(
+      {
+        lat : offer.location.lat,
+        lng : offer.location.lng,
+      },
+      {
+        icon: commonMarkerIcon,
+      },
+    );
+    commonMarker.addTo(map);
+    commonMarker.bindPopup(createPopup(offer));
   });
+};
 
-  map.setView({
-    lat: LOCATION_LAT_DEFAULT,
-    lng: LOCATION_LNG_DEFAULT,
-  }, ZOOM_MAP);
-});
+
+export {returnMainMarker, makeCommonMarkers};
