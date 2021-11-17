@@ -1,4 +1,4 @@
-import {getIntegerFromRange, getRandomFloat} from './util.js';
+/*import {getIntegerFromRange, getRandomFloat} from './util.js';
 const AVATARS = [
   'img/avatars/user01.png',
   'img/avatars/user02.png',
@@ -91,13 +91,6 @@ const createOffer = () => {
   };
 };
 
-console.log(createOffer());
 
-const OFFERS_COUNT = 10;
-
-const getOffer = () => Array.from({length: OFFERS_COUNT}, createOffer);
-
-
-console.log(getOffer());
-
-export {getOffer};
+export {createOffer};
+*/

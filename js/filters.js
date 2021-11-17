@@ -1,3 +1,7 @@
+import { sendData } from './api.js';
+import { showAlert } from './show-alert.js';
+import { returnMainMarker } from './map.js';
+
 const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
 
@@ -30,4 +34,21 @@ const activateForm = () => {
   mapFilters.querySelector('.map__features').classList.remove('disabled');
 };
 
-export{disableForm, activateForm};
+const sendUserFormSubmit = (onSuccess) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      () => onSuccess(),
+      () => showAlert('Ошибка при отправке формы. Повторите попытку'),
+      new FormData(evt.target),
+    );
+  });
+};
+const clearForm = () => {
+  adForm.reset();
+  returnMainMarker();
+};
+
+
+export{disableForm, activateForm, sendUserFormSubmit, clearForm};
