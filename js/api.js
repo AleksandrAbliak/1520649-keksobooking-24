@@ -1,12 +1,13 @@
-import { onSuccessSubmit } from './user-form.js';
-import { onFailSubmit } from './user-form.js';
+import { onSuccessSubmit } from './user-modal.js';
+import { onFailSubmit } from './user-modal.js';
 import { showAlert } from './show-alert.js';
+import {getFiltered} from './filter.js';
 
-const getData = (onSuccess) => {
+const getData = () => {
   fetch('https://24.javascript.pages.academy/keksobooking/data')
     .then((response) => response.json())
     .then((offers) => {
-      onSuccess(offers);
+      getFiltered(offers);
     })
     .catch((err) => {
       showAlert(`Ошибка загрузки данных: ${err}`);

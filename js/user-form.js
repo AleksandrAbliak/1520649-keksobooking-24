@@ -1,43 +1,54 @@
-import { clearForm } from './filters.js';
+import { sendData } from './api.js';
+import { showAlert } from './show-alert.js';
+import { returnMainMarker } from './map.js';
 
-const bodyElement = document.querySelector('body');
-const onSuccessSubmit = () => {
-  const successModal = document.querySelector('#success').content.querySelector('.success');
-  const modalElement = successModal.cloneNode(true);
-  bodyElement.appendChild(modalElement);
-  bodyElement.addEventListener('click', () => {
-    bodyElement.removeChild(modalElement);
-  }, {once:true});
-  bodyElement.addEventListener('keydown', (evt) => {
-    if (evt.key ==='Escape') {
-      bodyElement.removeChild(modalElement);
-    }
-  } ,{once:true});
+const adForm = document.querySelector('.ad-form');
+const mapFilters = document.querySelector('.map__filters');
+
+const disableForm = () => {
+  adForm.classList.add('ad-form--disabled');
+  const adFormElements=  adForm.querySelectorAll('.ad-form__element');
+  (adFormElements).forEach((element) => {
+    element.classList.add('.disabled');
+  });
+  mapFilters.classList.add('map__filters--disabled');
+  const mapFiltersContainer = mapFilters.querySelectorAll('.map__filter');
+  (mapFiltersContainer).forEach((element) => {
+    element.classList.add('.disabled');
+  });
+  mapFilters.querySelector('.map__features').classList.add('disabled');
 };
 
 
-const onFailSubmit = () => {
-  const failModal = document.querySelector('#error').content.querySelector('.error');
-  const closeButton = failModal.querySelector('.error__button');
-  const modalElement = failModal.cloneNode(true);
-  bodyElement.appendChild(modalElement);
-  bodyElement.addEventListener('click', () => {
-    bodyElement.removeChild(modalElement);
-  }, {once: true});
-  bodyElement.addEventListener('keydown', (evt) => {
-    if (evt.key ==='Escape') {
-      bodyElement.removeChild(modalElement);
-    }
-  } ,{once:true});
-  closeButton.addEventListener('click',() => {
-    bodyElement.removeChild(modalElement);
-  }, {once: true});
+const activateForm = () => {
+  adForm.classList.remove('ad-form--disabled');
+  const adFormElements=  adForm.querySelectorAll('.ad-form__element');
+  (adFormElements).forEach((element) => {
+    element.classList.remove('.disabled');
+  });
+  mapFilters.classList.remove('map__filters--disabled');
+  const mapFiltersContainer = mapFilters.querySelectorAll('.map__filter');
+  (mapFiltersContainer).forEach((element) => {
+    element.classList.remove('.disabled');
+  });
+  mapFilters.querySelector('.map__features').classList.remove('disabled');
+};
+
+const sendUserFormSubmit = (onSuccess) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      () => onSuccess(),
+      () => showAlert('Ошибка при отправке формы. Повторите попытку'),
+      new FormData(evt.target),
+    );
+  });
+};
+const clearForm = () => {
+  adForm.reset();
+  returnMainMarker();
 };
 
 
-const resetButton = document.querySelector('.ad-form__reset');
-resetButton.addEventListener('click',() => {
-  clearForm();
-});
-
-export{onFailSubmit, onSuccessSubmit};
+export{disableForm, activateForm, sendUserFormSubmit, clearForm};

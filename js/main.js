@@ -1,15 +1,15 @@
-import './data.js';
 import './util.js';
 import './popup.js';
 import './form.js';
 import './map.js';
-import './filters.js';
-import './api.js';
 import './user-form.js';
+import './api.js';
+import './user-modal.js';
+import './filter.js';
 import {  getData} from './api.js';
 import { makeCommonMarkers } from './map.js';
-import { clearForm } from './filters.js';
-import { sendUserFormSubmit } from './filters.js';
+import { clearForm } from './user-form.js';
+import { sendUserFormSubmit } from './user-form.js';
 const OFFERS_COUNT = 10;
 
 getData((offers) => {

@@ -1,5 +1,5 @@
-import { activateForm } from './filters.js';
-import { disableForm } from './filters.js';
+import { activateForm } from './user-form.js';
+import { disableForm } from './user-form.js';
 import { createPopup } from './popup.js';
 //import { getOffer } from './data.js';
 disableForm();
@@ -59,6 +59,8 @@ const commonMarkerIcon = L.icon({
   iconAnchor:[20,40],
 });
 
+const layerGroup = L.layerGroup().addTo(map);
+
 const makeCommonMarkers = (offers) => {
   offers.forEach((offer) => {
     const commonMarker = L.marker(
@@ -70,10 +72,10 @@ const makeCommonMarkers = (offers) => {
         icon: commonMarkerIcon,
       },
     );
-    commonMarker.addTo(map);
+    commonMarker.addTo(layerGroup);
     commonMarker.bindPopup(createPopup(offer));
   });
 };
 
 
-export {returnMainMarker, makeCommonMarkers};
+export { returnMainMarker, makeCommonMarkers, layerGroup };
