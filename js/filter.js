@@ -57,11 +57,11 @@ const filterByFeatures = (sortItem) => {
   return selectedFeatures.every((feature) => features && features.includes(feature.value));
 };
 
-const getFiltersData = (announcements) => announcements.filter((announcement) => filterByHousingType(announcement) &&
-      filterByPrice(announcement) &&
-      filterByRooms(announcement) &&
-      filterByGuests(announcement) &&
-      filterByFeatures(announcement));
+const getFiltersData = (offers) => offers.filter((offer) => filterByHousingType(offer) &&
+      filterByPrice(offer) &&
+      filterByRooms(offer) &&
+      filterByGuests(offer) &&
+      filterByFeatures(offer));
 
 const getFiltered = (incoming) => {
   const clonedOffers = incoming.slice();

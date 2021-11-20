@@ -1,4 +1,6 @@
-import { clearForm } from './user-form.js';
+import { returnMainMarker } from './map.js';
+
+const resetButton = document.querySelector('.ad-form__reset');
 
 const bodyElement = document.querySelector('body');
 const onSuccessSubmit = () => {
@@ -35,9 +37,9 @@ const onFailSubmit = () => {
 };
 
 
-const resetButton = document.querySelector('.ad-form__reset');
-resetButton.addEventListener('click',() => {
-  clearForm();
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  returnMainMarker();
 });
 
 export{onFailSubmit, onSuccessSubmit};

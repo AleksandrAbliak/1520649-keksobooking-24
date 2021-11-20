@@ -1,6 +1,6 @@
 import { sendData } from './api.js';
-import { showAlert } from './show-alert.js';
 import { returnMainMarker } from './map.js';
+import { onFailSubmit } from './user-modal.js';
 
 const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
@@ -40,7 +40,7 @@ const sendUserFormSubmit = (onSuccess) => {
 
     sendData(
       () => onSuccess(),
-      () => showAlert('Ошибка при отправке формы. Повторите попытку'),
+      () => onFailSubmit('Ошибка при отправке формы. Повторите попытку'),
       new FormData(evt.target),
     );
   });
