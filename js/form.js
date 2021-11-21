@@ -11,7 +11,7 @@ const capacityRules = {
   2: [1, 2],
   3: [1, 2, 3],
   100: [0],
-  error: (value) => (value === 100 ? 'Не для гостей' : `Допустимое количество гостей: ${value}`),
+  renderError: (value) => (value === 100 ? 'Не для гостей' : `Допустимое количество гостей: ${value}`),
 };
 
 const form = document.querySelector('.ad-form');
@@ -37,7 +37,7 @@ const checkCountGuests = () => {
   const guestsValue = Number(formCapacity.value);
 
   if (!capacityRules[roomsValue].includes(guestsValue)) {
-    formCapacity.setCustomValidity(capacityRules.error(roomsValue));
+    formCapacity.setCustomValidity(capacityRules.renderError(roomsValue));
   } else {
     formCapacity.setCustomValidity('');
   }
@@ -49,7 +49,7 @@ const validateFields = () => {
   formTimeout.value = formTimein.value;
 };
 
-const validateForm = () => {
+const setFormListeners = () => {
   validateFields();
   formType.addEventListener('change', () => changeMinPrice());
   formTimein.addEventListener('change', onTimeChange);
@@ -57,4 +57,4 @@ const validateForm = () => {
   formRoomNumber.addEventListener('change', () => checkCountGuests());
   formCapacity.addEventListener('change', () => checkCountGuests());
 };
-validateForm ();
+setFormListeners ();

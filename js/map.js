@@ -1,7 +1,7 @@
-import { activateForm } from './filters.js';
-import { disableForm } from './filters.js';
+import { activateForm } from './user-form.js';
+import { disableForm } from './user-form.js';
 import { createPopup } from './popup.js';
-//import { getOffer } from './data.js';
+
 disableForm();
 
 const LOCATION_LAT_DEFAULT = 35.68;
@@ -49,6 +49,11 @@ const returnMainMarker = () => {
     lat: LOCATION_LAT_DEFAULT,
     lng: LOCATION_LNG_DEFAULT,
   });
+  map.setView({
+    lat: LOCATION_LAT_DEFAULT,
+    lng: LOCATION_LNG_DEFAULT,
+  }, ZOOM_MAP);
+  map.closePopup();
   addressForm.value = `${marker._latlng.lat} ${marker._latlng.lng}`;
 };
 
@@ -58,6 +63,8 @@ const commonMarkerIcon = L.icon({
   iconSize:[40,40],
   iconAnchor:[20,40],
 });
+
+const layerGroup = L.layerGroup().addTo(map);
 
 const makeCommonMarkers = (offers) => {
   offers.forEach((offer) => {
@@ -70,10 +77,10 @@ const makeCommonMarkers = (offers) => {
         icon: commonMarkerIcon,
       },
     );
-    commonMarker.addTo(map);
+    commonMarker.addTo(layerGroup);
     commonMarker.bindPopup(createPopup(offer));
   });
 };
 
 
-export {returnMainMarker, makeCommonMarkers};
+export { returnMainMarker, makeCommonMarkers, layerGroup };
