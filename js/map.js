@@ -2,18 +2,19 @@ import { activateForm } from './user-form.js';
 import { disableForm } from './user-form.js';
 import { createPopup } from './popup.js';
 
-disableForm();
 
+const addressForm = document.querySelector('#address');
 const LOCATION_LAT_DEFAULT = 35.68;
 const LOCATION_LNG_DEFAULT = 139.77;
-const ZOOM_MAP = 13;
+const SAME_OFFER_LENGTH = 10;
 
+disableForm();
 
 const map = L.map('map-canvas')
   .on('load', () => {
     activateForm();
   })
-  .setView([LOCATION_LAT_DEFAULT, LOCATION_LNG_DEFAULT], ZOOM_MAP);
+  .setView([LOCATION_LAT_DEFAULT, LOCATION_LNG_DEFAULT], 13);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' , {
   attribution : 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -37,7 +38,6 @@ const marker = L.marker(
 );
 marker.addTo(map);
 
-const addressForm = document.querySelector('#address');
 addressForm.value = `${marker._latlng.lat}, ${marker._latlng.lng}`;
 marker.on('drag', (evt) => {
   const markerAdress = evt.target.getLatLng();
@@ -52,7 +52,7 @@ const returnMainMarker = () => {
   map.setView({
     lat: LOCATION_LAT_DEFAULT,
     lng: LOCATION_LNG_DEFAULT,
-  }, ZOOM_MAP);
+  });
   map.closePopup();
   addressForm.value = `${marker._latlng.lat} ${marker._latlng.lng}`;
 };
@@ -67,20 +67,23 @@ const commonMarkerIcon = L.icon({
 const layerGroup = L.layerGroup().addTo(map);
 
 const makeCommonMarkers = (offers) => {
-  offers.forEach((offer) => {
-    const commonMarker = L.marker(
-      {
-        lat : offer.location.lat,
-        lng : offer.location.lng,
-      },
-      {
-        icon: commonMarkerIcon,
-      },
-    );
-    commonMarker.addTo(layerGroup);
-    commonMarker.bindPopup(createPopup(offer));
-  });
+  layerGroup.clearLayers();
+  offers
+    .slice(0,SAME_OFFER_LENGTH)
+    .forEach((offer) => {
+      const commonMarker = L.marker(
+        {
+          lat : offer.location.lat,
+          lng : offer.location.lng,
+        },
+        {
+          icon: commonMarkerIcon,
+        },
+      );
+      commonMarker.addTo(layerGroup);
+      commonMarker.bindPopup(createPopup(offer));
+    });
 };
 
 
-export { returnMainMarker, makeCommonMarkers, layerGroup };
+export { returnMainMarker, makeCommonMarkers, commonMarkerIcon, layerGroup };

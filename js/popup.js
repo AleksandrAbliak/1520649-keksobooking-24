@@ -1,4 +1,4 @@
-const OFFER_TYPES = {
+const offerType = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
   house: 'Дом',
@@ -45,10 +45,10 @@ const createPopup = ({offer, author}) => {
   popupPrice.textContent = `${offer.price} ₽/ночь`;
 
   const popupType = popup.querySelector('.popup__type');
-  popupType.textContent = OFFER_TYPES[offer.type];
+  popupType.textContent = offerType[offer.type];
 
   const popupCapacity = popup.querySelector('.popup__text--capacity');
-  popupCapacity.textContent = `${ offer.rooms  } комнаты для ${offer.guests} гостей`;
+  popupCapacity.textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
 
   const popupTime = popup.querySelector('.popup__text--time');
   popupTime.textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
@@ -82,4 +82,4 @@ const createPopup = ({offer, author}) => {
   return popup;
 };
 
-export{createPopup};
+export { createPopup };

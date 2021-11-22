@@ -1,9 +1,9 @@
 const typePrice = {
-  bungalow: 0,
-  flat: 1000,
-  hotel: 3000,
-  house: 5000,
-  palace: 10000,
+  BUNGALOW: 0,
+  FLAT: 1000,
+  HOTEL: 3000,
+  HOUSE: 5000,
+  PALACE: 10000,
 };
 
 const capacityRules = {
@@ -11,7 +11,7 @@ const capacityRules = {
   2: [1, 2],
   3: [1, 2, 3],
   100: [0],
-  renderError: (value) => (value === 100 ? 'Не для гостей' : `Допустимое количество гостей: ${value}`),
+  RENDER_ERROR: (value) => (value === 100 ? 'Не для гостей' : `Допустимое количество гостей: ${value}`),
 };
 
 const form = document.querySelector('.ad-form');
@@ -23,8 +23,8 @@ const formRoomNumber = form.querySelector('#room_number');
 const formCapacity = form.querySelector('#capacity');
 
 const changeMinPrice = () => {
-  formPrice.min = typePrice[formType.value];
-  formPrice.placeholder = typePrice[formType.value];
+  formPrice.min = typePrice[formType.value.toUpperCase()];
+  formPrice.placeholder = typePrice[formType.value.toUpperCase()];
 };
 
 const onTimeChange = (evt) => {
@@ -37,7 +37,7 @@ const checkCountGuests = () => {
   const guestsValue = Number(formCapacity.value);
 
   if (!capacityRules[roomsValue].includes(guestsValue)) {
-    formCapacity.setCustomValidity(capacityRules.renderError(roomsValue));
+    formCapacity.setCustomValidity(capacityRules.RENDER_ERROR(roomsValue));
   } else {
     formCapacity.setCustomValidity('');
   }
@@ -57,4 +57,6 @@ const setFormListeners = () => {
   formRoomNumber.addEventListener('change', () => checkCountGuests());
   formCapacity.addEventListener('change', () => checkCountGuests());
 };
-setFormListeners ();
+setFormListeners();
+
+export { changeMinPrice };

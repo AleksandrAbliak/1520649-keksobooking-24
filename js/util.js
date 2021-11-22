@@ -1,25 +1,22 @@
-const getIntegerFromRange = function (min, max) {
-  if (min < 0 || max <= min) {
-    ('Недопустимое значение диапазона');
-  }
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+// Функция взята из интернета и доработана
+// Источник - https://www.freecodecamp.org/news/javascript-debounce-example
 
-getIntegerFromRange(1, 10);
+function debounce (callback, timeoutDelay = 500) {
+  // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
+  // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать
+  let timeoutId;
 
+  return (...rest) => {
+    // Перед каждым новым вызовом удаляем предыдущий таймаут,
+    // чтобы они не накапливались
+    clearTimeout(timeoutId);
 
-const getRandomFloat = (min, max, precision = 2) => {
+    // Затем устанавливаем новый таймаут с вызовом колбэка на ту же задержку
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
 
-  if (min >= max || min < 0) {
-    ('Некорректный диапазон чисел');
-  }
+    // Таким образом цикл «поставить таймаут - удалить таймаут» будет выполняться,
+    // пока действие совершается чаще, чем переданная задержка timeoutDelay
+  };
+}
 
-  const randomFloat = Math.random() * (max - min) + min;
-  const result = randomFloat.toFixed(precision);
-
-  return result;
-};
-
-getRandomFloat(1.4, 9.4, 5);
-
-export{getIntegerFromRange, getRandomFloat};
+export { debounce };

@@ -1,13 +1,13 @@
 import { onSuccessSubmit } from './user-modal.js';
 import { onFailSubmit } from './user-modal.js';
 import { showAlert } from './show-alert.js';
-import {getFiltered} from './filter.js';
+import { getFilteredData } from './filter.js';
 
 const getData = () => {
   fetch('https://24.javascript.pages.academy/keksobooking/data')
     .then((response) => response.json())
     .then((offers) => {
-      getFiltered(offers);
+      getFilteredData(offers);
     })
     .catch((err) => {
       showAlert(`Ошибка загрузки данных: ${err}`);
@@ -36,4 +36,4 @@ const sendData = (onSuccess, onFail, body) => {
 };
 
 
-export{sendData, getData};
+export { sendData, getData };
